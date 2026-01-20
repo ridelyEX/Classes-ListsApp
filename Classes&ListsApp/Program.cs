@@ -8,6 +8,7 @@ internal class Program
         List<Personas> persona = new List<Personas>();
         bool activo = true;
         int opc;
+        string? nombre;
 
         do
         {
@@ -20,7 +21,7 @@ internal class Program
             switch (opc)
             {
                 case 1:
-                    string nombre = Operaciones.Nombre();
+                    nombre = Operaciones.Nombre();
                     string color = Operaciones.Color();
                     string sexo = Operaciones.Sexo();
                     int edad = Operaciones.Edad();
@@ -58,7 +59,13 @@ internal class Program
                     }
                     break;
                 case 4:
+                    Operaciones.Busqueda(persona);
+                    break;
+                case 5:
                     activo = false;
+                    break;
+                default:
+                    Console.WriteLine("Selecciona una opción del menú");
                     break;
             }
         } while (activo == true);
