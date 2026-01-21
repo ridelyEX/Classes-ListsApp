@@ -8,7 +8,6 @@ namespace Classes_ListsApp.utiils
 {
     internal class Operaciones
     {
-        List<Personas> persona = new List<Personas>();
         public static string Leer()
         {
             string? leer;
@@ -22,10 +21,14 @@ namespace Classes_ListsApp.utiils
         public static void Menu()
         {
             Console.WriteLine("1. Registrar persona");
-            Console.WriteLine("2. Mostrar todas");
-            Console.WriteLine("3. Mostrar mayores de edad");
+            Console.WriteLine("2. Mostrar todos los registros");
+            Console.WriteLine("3. Mostrar personas mayores de edad");
             Console.WriteLine("4. Buscar persona");
-            Console.WriteLine("5. Salir");
+            Console.WriteLine("5. Conteo de personas vivas y fallecidas");
+            Console.WriteLine("6. Promedio de edades");
+            Console.WriteLine("7. Persona mayor");
+            Console.WriteLine("8. Persona menor");
+            Console.WriteLine("9. Salir");
         }
 
         public static string Nombre()
@@ -105,15 +108,26 @@ namespace Classes_ListsApp.utiils
             return vive == "S";
         }
 
-        /// Método "espejo" que realiza la búsqueda por medio de los parámetros
-        /// 'lista' del tipo List<Personas> y 'nombre' del tipo string.
-        /// Retorna el resultado de la búsqueda en la lista 'lista haciendo comparación con 'nombre'
-        /// 
+        /// <summary>
+        /// Searches for a person in the specified list whose name matches the given value, using a case-insensitive
+        /// comparison.
+        /// </summary>
+        /// <param name="lista">The list of persons to search. Cannot be null.</param>
+        /// <param name="nombre">The name to search for. The comparison is case-insensitive.</param>
+        /// <returns>A <see cref="Personas"/> object whose <c>Nombre</c> property matches <paramref name="nombre"/>; otherwise,
+        /// <see langword="null"/> if no match is found.</returns>
         public static Personas? Busqueda(List<Personas> lista, string nombre)
         {
             return lista.Find(p => p.Nombre?.Equals(nombre, StringComparison.OrdinalIgnoreCase) == true);
         }
 
+        /// <summary>
+        /// Prompts the user to enter a name and searches for a matching person in the provided list.
+        /// </summary>
+        /// <remarks>If a person with the specified name is found, their details are displayed in the
+        /// console. Otherwise, a message indicating that no result was found is shown. This method is intended for
+        /// interactive console applications.</remarks>
+        /// <param name="lista">The list of persons to search for a matching name. Cannot be null.</param>
         public static void Busqueda(List<Personas> lista)
         {
             string? nombre;
@@ -130,9 +144,12 @@ namespace Classes_ListsApp.utiils
             }
             else
                 Console.WriteLine("Resultado no encontrado");
-
         }
 
+        /// <summary>
+        /// Displays the details of the specified person to the console output.
+        /// </summary>
+        /// <param name="persona">The person whose details are to be displayed. Cannot be null.</param>
         public static void MostrarPersonas(Personas persona)
         {
             Console.WriteLine($"nombre: {persona.Nombre}");
@@ -140,6 +157,82 @@ namespace Classes_ListsApp.utiils
             Console.WriteLine($"sexo: {persona.Sexo}");
             Console.WriteLine($"edad: {persona.Edad}");
             Console.WriteLine($"vive: {(persona.Vive ? "sí" : "no")}");
+        }
+
+        public static (int, int) Conteo(List<Personas> list)
+        {
+            int vivos = 0;
+            int muertos = 0;
+            foreach (var persona in list)
+            {
+                if (persona.Vive)
+                    vivos++;
+                else
+                    muertos++;
+            }
+
+            return (vivos, muertos);
+        }
+
+        public static double Promedio(List<Personas> list)
+        {
+            double edades = 0;
+
+            foreach (var persona in list)
+            {
+                edades = persona.Edad + edades;
+            }
+
+            double promedio = edades / list.Count;
+
+            return promedio;
+        }
+
+        public static (string, int) Mayor(List<Personas> list)
+        {
+            if (list == null || list.Count == 0)
+                return (string.Empty, 0);
+
+            Personas? mayor = list[0];
+            foreach (var persona in list)
+            {
+                if (persona.Edad > mayor.Edad)
+                {
+                    mayor = persona;
+                }
+            }
+
+            return (mayor.Nombre ?? string.Empty, mayor.Edad);
+        }
+
+        public static (string, int) Menor(List<Personas> list)
+        {
+            if (list == null || list.Count == 0)
+                return (string.Empty, 0);
+
+            Personas? menor = list[0];
+            foreach (var persona in list)
+            {
+                if (persona.Edad < menor.Edad)
+                    menor = persona;
+            }
+
+            return (menor.Nombre ?? string.Empty, menor.Edad);
+        }
+
+
+
+        public static void Stats(List<Personas> list)
+        {
+            var (_vivos, _muertos) = Conteo(list);
+            var _promedio = Promedio(list);
+            var (_nombreM, _mayorM) = Mayor(list);
+            var (_nombrem, _menorm) = Menor(list);
+
+            Console.WriteLine($"La cantidad de personas vivas: {_vivos} y fallecidos: {_muertos}");
+            Console.WriteLine($"El promedio de la edad de los usuarios es {_promedio}");
+            Console.WriteLine($"La persona con mayor edad es: {_nombreM} con {_mayorM} años");
+            Console.WriteLine($"La persona con menor edad es: {_nombrem} con {_menorm}");
         }
     }
 }
