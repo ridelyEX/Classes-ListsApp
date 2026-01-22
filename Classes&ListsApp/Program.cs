@@ -21,6 +21,7 @@ internal class Program
             switch (opc)
             {
                 case 1:
+                    Console.Clear();
                     nombre = Operaciones.Nombre();
                     string color = Operaciones.Color();
                     string sexo = Operaciones.Sexo();
@@ -31,6 +32,7 @@ internal class Program
                     persona.Add(nuevo);
                     break;
                 case 2:
+                    Console.Clear();
                     if (persona.Count == 0)
                         Console.WriteLine("No hay registros de personas");
                     else
@@ -45,6 +47,7 @@ internal class Program
                     }
                     break;
                 case 3:
+                    Console.Clear();
                     if (persona.Count == 0)
                         Console.WriteLine("No hay registros de personas");
                     else
@@ -59,15 +62,19 @@ internal class Program
                     }
                     break;
                 case 4:
+                    Console.Clear();
                     Operaciones.Busqueda(persona);
                     break;
                 case 5:
+                    Console.Clear();
                     Operaciones.Stats(persona);
                     break;
                 case 6:
+                    Console.Clear();
                     activo = false;
                     break;
                 default:
+                    Console.Clear();
                     Console.WriteLine("Selecciona una opción del menú");
                     break;
             }
