@@ -1,7 +1,5 @@
 ﻿using Classes_ListsApp.personas;
 using System;
-using System.Collections;
-using System.Drawing;
 using System.Text;
 
 namespace Classes_ListsApp.utiils
@@ -24,11 +22,8 @@ namespace Classes_ListsApp.utiils
             Console.WriteLine("2. Mostrar todos los registros");
             Console.WriteLine("3. Mostrar personas mayores de edad");
             Console.WriteLine("4. Buscar persona");
-            Console.WriteLine("5. Conteo de personas vivas y fallecidas");
-            Console.WriteLine("6. Promedio de edades");
-            Console.WriteLine("7. Persona mayor");
-            Console.WriteLine("8. Persona menor");
-            Console.WriteLine("9. Salir");
+            Console.WriteLine("5. Mostrar estadísticas");
+            Console.WriteLine("6. Salir");
         }
 
         public static string Nombre()
@@ -70,7 +65,7 @@ namespace Classes_ListsApp.utiils
                 sexo = Leer()?.Trim();
 
                 if (string.IsNullOrEmpty(sexo))
-                    Console.WriteLine("El nombr no puede estar vacío");
+                    Console.WriteLine("El nombre no puede estar vacío");
             } while (string.IsNullOrEmpty(sexo));
 
             return sexo;
@@ -139,7 +134,7 @@ namespace Classes_ListsApp.utiils
 
             if (resultado != null)
             {
-                Console.WriteLine("Persona econtrada:");
+                Console.WriteLine("Persona encontrada:");
                 MostrarPersonas(resultado);
             }
             else
@@ -220,10 +215,19 @@ namespace Classes_ListsApp.utiils
             return (menor.Nombre ?? string.Empty, menor.Edad);
         }
 
-
+        public static bool TieneElementos(List<Personas> list)
+        {
+            return list?.Count > 0;
+        }
 
         public static void Stats(List<Personas> list)
         {
+            if (!TieneElementos(list))
+            {
+                Console.WriteLine("No existen registros");
+                return;
+            }
+
             var (_vivos, _muertos) = Conteo(list);
             var _promedio = Promedio(list);
             var (_nombreM, _mayorM) = Mayor(list);
@@ -233,6 +237,7 @@ namespace Classes_ListsApp.utiils
             Console.WriteLine($"El promedio de la edad de los usuarios es {_promedio}");
             Console.WriteLine($"La persona con mayor edad es: {_nombreM} con {_mayorM} años");
             Console.WriteLine($"La persona con menor edad es: {_nombrem} con {_menorm}");
+            
         }
     }
 }

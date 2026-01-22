@@ -25,10 +25,5 @@ namespace Classes_ListsApp.personas
             Vive = vive;
         }
 
-
-        public override string? ToString()
-        {
-            return base.ToString();
-        }
     }
 }

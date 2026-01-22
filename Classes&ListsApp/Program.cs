@@ -62,48 +62,9 @@ internal class Program
                     Operaciones.Busqueda(persona);
                     break;
                 case 5:
-                    if (persona.Count == 0)
-                        Console.WriteLine("No hay registros de personas");
-                    else
-                    {
-                        var (_vivos, _muertos) = Operaciones.Conteo(persona);
-
-
-                        Console.WriteLine($"Personas vivas: {_vivos}");
-                        Console.WriteLine($"Personas fallecidas: {_muertos}");
-                    }
-                        break;
+                    Operaciones.Stats(persona);
+                    break;
                 case 6:
-                    if (persona.Count == 0)
-                        Console.WriteLine("No hay registros de personas");
-                    else
-                    {
-                        var _promedio = Operaciones.Promedio(persona);
-                        Console.WriteLine($"Promedio de edades: {_promedio}");
-
-                    }
-                    break;
-                case 7:
-                    if (persona.Count == 0)
-                        Console.WriteLine("No hay registros de personas");
-                    else
-                    {
-                        var (_nombre, _edad) = Operaciones.Mayor(persona);
-                        //string _nombre = Operaciones.Mayor(persona).Item1;
-                        //int _edad = Operaciones.Mayor(persona).Item2;
-                        Console.WriteLine($"La persona con mayor edad es {_nombre} con {_edad} años");
-                    }
-                    break;
-                case 8:
-                    if (persona.Count == 0)
-                        Console.WriteLine("No hay registros de personas");
-                    else
-                    {
-                        var (_nombre, _edad) = Operaciones.Menor(persona);
-                        Console.WriteLine($"La persona con mayor edad es {_nombre} con {_edad} años");
-                    }
-                    break;
-                case 9:
                     activo = false;
                     break;
                 default:
